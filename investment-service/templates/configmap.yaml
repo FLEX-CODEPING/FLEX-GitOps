@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: investment-service-config
+data:
+  APPLICATION_PORT: {{ .Values.config.APPLICATION_PORT | quote }}
+  SWAGGER_SERVER_URL: {{ .Values.config.SWAGGER_SERVER_URL | quote }}
+  DATABASE_HOST: {{ .Values.config.DATABASE_HOST | quote }}
+  DATABASE_USERNAME: {{ .Values.config.DATABASE_USERNAME | quote }}
+  DATABASE_PASSWORD: {{ .Values.config.DATABASE_PASSWORD | quote }}
+  DEV_KAFKA_BOOTSTRAP_SERVER: {{ .Values.config.DEV_KAFKA_BOOTSTRAP_SERVER | quote }}
+  PROD_KAFKA_BOOTSTRAP_SERVER: {{ .Values.config.PROD_KAFKA_BOOTSTRAP_SERVER | quote }}
+  KAFKA_BOOTSTRAP_PORT: {{ .Values.config.KAFKA_BOOTSTRAP_PORT | quote }}
+  OPENAI_API_KEY: {{ .Values.config.OPENAI_API_KEY | quote }}
+  WEBCLIENT_BASE_URL: {{ .Values.config.WEBCLIENT_BASE_URL | quote }}
