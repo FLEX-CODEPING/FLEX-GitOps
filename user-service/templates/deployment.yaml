@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      nodeSelector:
+        kubernetes.io/hostname: flex-prod-worker-1
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: APPLICATION_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: APPLICATION_PORT
+            - name: KAKAO_APP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: KAKAO_APP_ID
+            - name: KAKAO_ADMIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: KAKAO_ADMIN_ID
+            - name: KAKAO_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: KAKAO_CLIENT_SECRET
+            - name: KAKAO_REDIRECT_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: KAKAO_REDIRECT_URI
+            - name: KAKAO_AUTHORIZATION_GRANT_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: KAKAO_AUTHORIZATION_GRANT_TYPE
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: JWT_SECRET_KEY
+            - name: JWT_REFRESH_EXPIRATION
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: JWT_REFRESH_EXPIRATION
+            - name: JWT_ACCESS_EXPIRATION
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: JWT_ACCESS_EXPIRATION
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: DATABASE_HOST
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: DATABASE_NAME
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: DATABASE_PASSWORD
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: REDIS_PASSWORD
+            - name: SWAGGER_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: SWAGGER_SERVER_URL

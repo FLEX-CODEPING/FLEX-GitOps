@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+data:
+  APPLICATION_PORT: {{ .Values.config.APPLICATION_PORT | quote }}
+  KAKAO_APP_ID: {{ .Values.config.KAKAO_APP_ID | quote }}
+  KAKAO_ADMIN_ID: {{ .Values.config.KAKAO_ADMIN_ID | quote }}
+  KAKAO_CLIENT_SECRET: {{ .Values.config.KAKAO_CLIENT_SECRET | quote }}
+  KAKAO_REDIRECT_URI: {{ .Values.config.KAKAO_REDIRECT_URI | quote }}
+  KAKAO_AUTHORIZATION_GRANT_TYPE: {{ .Values.config.KAKAO_AUTHORIZATION_GRANT_TYPE | quote }}
+  JWT_SECRET_KEY: {{ .Values.config.JWT_SECRET_KEY | quote }}
+  JWT_REFRESH_EXPIRATION: {{ .Values.config.JWT_REFRESH_EXPIRATION | quote }}
+  JWT_ACCESS_EXPIRATION: {{ .Values.config.JWT_ACCESS_EXPIRATION | quote }}
+  REDIS_HOST: {{ .Values.config.REDIS_HOST | quote }}
+  REDIS_PORT: {{ .Values.config.REDIS_PORT | quote }}
+  REDIS_PASSWORD: {{ .Values.config.REDIS_PASSWORD | quote }}
+  SWAGGER_SERVER_URL: {{ .Values.config.SWAGGER_SERVER_URL | quote }}
+  DATABASE_HOST: {{ .Values.config.DATABASE_HOST | quote }}
+  DATABASE_NAME: {{ .Values.config.DATABASE_NAME | quote }}
+  DATABASE_USERNAME: {{ .Values.config.DATABASE_USERNAME | quote }}
+  DATABASE_PASSWORD: {{ .Values.config.DATABASE_PASSWORD | quote }}
