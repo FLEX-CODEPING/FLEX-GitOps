@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stock-service-config
+data:
+  REDIS_HOST: {{ .Values.config.REDIS_HOST | quote }}
+  REDIS_PORT: {{ .Values.config.REDIS_PORT | quote }}
+  REDIS_PASSWORD: {{ .Values.config.REDIS_PASSWORD | quote }}
+
+  SWAGGER_SERVER_URL: {{ .Values.config.SWAGGER_SERVER_URL | quote }}
+
+  DATABASE_HOST: {{ .Values.config.DATABASE_HOST | quote }}
+  DATABASE_USERNAME: {{ .Values.config.DATABASE_USERNAME | quote }}
+  DATABASE_PASSWORD: {{ .Values.config.DATABASE_PASSWORD | quote }}
+
+  APPLICATION_PORT: {{ .Values.config.APPLICATION_PORT | quote }}
+
+  ALGORITHM: {{ .Values.config.ALGORITHM | quote }}
+  SECRET: {{ .Values.config.SECRET | quote }}
+
+  ELASTICSEARCH_HOST: {{ .Values.config.ELASTICSEARCH_HOST | quote }}
