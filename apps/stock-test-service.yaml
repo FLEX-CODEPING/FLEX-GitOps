@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stock-test-service
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/FLEX-CODEPING/FLEX-GitOps.git
+    targetRevision: main
+    path: charts/stock-test-service
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stock-test-service
+  
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true   
+    syncOptions:
+      - 'CreateNamespace=true'

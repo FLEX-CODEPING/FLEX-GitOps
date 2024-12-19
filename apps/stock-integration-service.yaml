@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stock-integration-service
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/FLEX-CODEPING/FLEX-GitOps.git
+    targetRevision: main
+    path: charts/stock-integration-service
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: stock-integration-service
+  
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true   
+    syncOptions:
+      - 'CreateNamespace=true'
