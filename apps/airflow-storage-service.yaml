@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airflow-storage-service
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/FLEX-CODEPING/FLEX-GitOps.git
+    targetRevision: main
+    path: charts/airflow-storage-service
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: airflow-storage-service
+  
+  syncPolicy:
+    automated: 
+      prune: true 
+      selfHeal: true   
+    syncOptions:
+      - 'CreateNamespace=true'
