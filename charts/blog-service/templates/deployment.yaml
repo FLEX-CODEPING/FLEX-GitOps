@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      nodeSelector:
+        kubernetes.io/hostname: flex-prod-worker-1
+      containers:
+        - name: {{ .Release.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: APPLICATION_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: APPLICATION_PORT
+            - name: SWAGGER_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: SWAGGER_SERVER_URL
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: DATABASE_HOST
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: DATABASE_PASSWORD
+            - name: ALGORITHM
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: ALGORITHM
+            - name: SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: SECRET
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: REDIS_PASSWORD
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: REDIS_HOST
+            - name: DEV_ELASTICSEARCH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: DEV_ELASTICSEARCH_HOST
+            - name: PROD_ELASTICSEARCH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: blog-service-config
+                  key: PROD_ELASTICSEARCH_HOST

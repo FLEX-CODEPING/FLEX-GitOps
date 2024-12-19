@@ -1,0 +1,9 @@
+apiVersion: v2
+name: investment-service
+version: 0.1.0
+description: "Helm chart for investment service"
+keywords:
+  - "kubernetes"
+  - "helm"
+  - "investment"
+dependencies: []

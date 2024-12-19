@@ -1,0 +1,65 @@
+namespace: user-service
+# Replica count for the deployment
+replicaCount: 2
+# Image settings
+image:
+  repository: flexcodeping/flex-be-prod-user
+  tag: "6" # Default image tag
+  pullPolicy: IfNotPresent # Image pull policy
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+  
+# Pod annotations (optional)
+podAnnotations: {}
+# Pod labels (optional)
+podLabels: {}
+# Resource requests and limits
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+# Liveness probe configuration
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+# Readiness probe configuration
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+nodeSelector:
+  app: user-service
+
+config:
+  APPLICATION_PORT: "8080"
+  KAKAO_APP_ID: "07d1730a4129a6b54bfe77c75da8c11b"
+  KAKAO_ADMIN_ID: "35b5f524eb47f2981adf5cf7fcd5deec"
+  KAKAO_CLIENT_SECRET: "Xj7qeZY3peMh72yRQn1dgSblT1s7Kj97"
+  KAKAO_REDIRECT_URI: "http://localhost:3000/auth/signIn"
+  KAKAO_AUTHORIZATION_GRANT_TYPE: "authorization_code"
+  JWT_SECRET_KEY: "943cb527164de7a08667b48ae9279a3888545bdcb83f1da6d178370eb015aecb"
+  JWT_REFRESH_EXPIRATION: "1209600"
+  JWT_ACCESS_EXPIRATION: "1800"
+  REDIS_HOST: "172.16.212.34"
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: "codeping1!"
+  SWAGGER_SERVER_URL: "http://172.16.212.102:30000"
+  DATABASE_HOST: "172.16.212.31"
+  DATABASE_NAME: "flex_user"
+  DATABASE_USERNAME: "admin"
+  DATABASE_PASSWORD: "codeping1!"
+
+serviceAccount:
+  create: true
+  name: user-service-account
+
+nodeSelector:
+  kubernetes.io/hostname: flex-prod-worker-1

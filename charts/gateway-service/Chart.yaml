@@ -1,0 +1,9 @@
+apiVersion: v2
+name: gateway-service
+version: 0.1.0
+description: "Helm chart for gateway service"
+keywords:
+  - "kubernetes"
+  - "helm"
+  - "gateway"
+dependencies: []

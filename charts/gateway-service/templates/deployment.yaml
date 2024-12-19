@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      nodeSelector:
+        kubernetes.io/hostname: flex-prod-gateway  
+      containers:
+      - name: {{ .Release.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: JWT_SECRET_KEY
+        - name: JWT_ACCESS_EXPIRATION
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: JWT_ACCESS_EXPIRATION
+        - name: JWT_REFRESH_EXPIRATION
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: JWT_REFRESH_EXPIRATION
+        - name: SWAGGER_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: SWAGGER_SERVER_URL
+        - name: USER_SERVICE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: USER_SERVICE_PORT
+        # - name: USER_SERVICE_URI
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: gateway-service-config
+        #       key: USER_SERVICE_URI
+        - name: USER_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              name: gateway-service-config
+              key: USER_SERVICE
+
