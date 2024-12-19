@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blog-service-config
+data:
+  APPLICATION_PORT: {{ .Values.config.APPLICATION_PORT | quote }}
+  SWAGGER_SERVER_URL: {{ .Values.config.SWAGGER_SERVER_URL | quote }}
+  DATABASE_HOST: {{ .Values.config.DATABASE_HOST | quote }}
+  DATABASE_USERNAME: {{ .Values.config.DATABASE_USERNAME | quote }}
+  DATABASE_PASSWORD: {{ .Values.config.DATABASE_PASSWORD | quote }}
+  ALGORITHM: {{ .Values.config.ALGORITHM | quote }}
+  SECRET: {{ .Values.config.SECRET | quote }}
+  REDIS_PORT: {{ .Values.config.REDIS_PORT | quote }}
+  REDIS_PASSWORD: {{ .Values.config.REDIS_PASSWORD | quote }}
+  REDIS_HOST: {{ .Values.config.REDIS_HOST | quote }}
+  DEV_ELASTICSEARCH_HOST: {{ .Values.config.DEV_ELASTICSEARCH_HOST | quote }}
+  PROD_ELASTICSEARCH_HOST: {{ .Values.config.PROD_ELASTICSEARCH_HOST | quote }}

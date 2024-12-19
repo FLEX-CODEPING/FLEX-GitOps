@@ -1,0 +1,9 @@
+apiVersion: v2
+name: blog-service
+version: 0.1.0
+description: "Helm chart for blog service"
+keywords:
+  - "kubernetes"
+  - "helm"
+  - "blog"
+dependencies: []

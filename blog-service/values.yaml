@@ -1,0 +1,65 @@
+namespace: blog-service
+# Replica count for the deployment
+replicaCount: 2
+# Image settings
+image:
+  repository: flexcodeping/flex-be-prod-blog
+  tag: "1" 
+  pullPolicy: IfNotPresent # Image pull policy
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+  
+# Pod annotations (optional)
+podAnnotations: {}
+# Pod labels (optional)
+podLabels: {}
+# Resource requests and limits
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+# Liveness probe configuration
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+# Readiness probe configuration
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+nodeSelector:
+  app: blog-service
+
+config:
+  APPLICATION_PORT: "8080"
+  SWAGGER_SERVER_URL: http://172.16.212.102:30000
+
+  DATABASE_HOST: "172.16.212.31"
+  DATABASE_USERNAME: "admin"
+  DATABASE_PASSWORD: "codeping1!"
+
+  ALGORITHM: "AES"
+  SECRET: "TEAM5CODEPING123"
+
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: codeping1!
+  REDIS_HOST: "172.16.212.34"
+
+  DEV_ELASTICSEARCH_HOST: "172.16.212.31"
+  PROD_ELASTICSEARCH_HOST: "172.16.212.31"
+
+
+serviceAccount:
+  create: true
+  name: blog-service-account
+
+nodeSelector:
+  kubernetes.io/hostname: flex-prod-worker-1
