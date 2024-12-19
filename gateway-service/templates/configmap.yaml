@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-service-config
+data:
+  JWT_ACCESS_EXPIRATION: {{ .Values.config.JWT_ACCESS_EXPIRATION | quote }}
+  JWT_REFRESH_EXPIRATION: {{ .Values.config.JWT_REFRESH_EXPIRATION | quote }}
+  JWT_SECRET_KEY: {{ .Values.config.JWT_SECRET_KEY | quote }}
+  SWAGGER_SERVER_URL: {{ .Values.config.SWAGGER_SERVER_URL | quote }}
+  PROD_GATEWAY_HOST: {{ .Values.config.PROD_GATEWAY_HOST | quote }}
+  APPLICATION_PORT: {{ .Values.config.APPLICATION_PORT | quote }}
+  USER_SERVICE_PORT: {{ .Values.config.USER_SERVICE_PORT | quote }}
+  USER_SERVICE_URI : {{ .Values.config.USER_SERVICE_URI | quote }}
+  USER_SERVICE : {{ .Values.config.USER_SERVICE | quote }}

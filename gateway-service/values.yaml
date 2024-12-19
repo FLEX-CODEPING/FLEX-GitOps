@@ -1,0 +1,58 @@
+namespace: gateway-service
+# Replica count for the deployment
+replicaCount: 2
+# Image settings
+image:
+  repository: flexcodeping/flex-be-prod-gateway
+  tag: "18" # Default image tag
+  pullPolicy: IfNotPresent # Image pull policy
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8080
+  nodePort: 30000
+
+  
+# Pod annotations (optional)
+podAnnotations: {}
+# Pod labels (optional)
+podLabels: {}
+# Resource requests and limits
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+# Liveness probe configuration
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+# Readiness probe configuration
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+nodeSelector:
+  app: gateway-service
+
+config:
+  JWT_SECRET_KEY: "943cb527164de7a08667b48ae9279a3888545bdcb83f1da6d178370eb015aecb"
+  JWT_ACCESS_EXPIRATION: 1209600
+  JWT_REFRESH_EXPIRATION: 1800
+  SWAGGER_SERVER_URL: "172.16.212.102:30000"
+  PROD_GATEWAY_HOST: "172.16.212.102"
+  APPLICATION_PORT: 30000
+  USER_SERVICE_PORT: 8080
+  USER_SERVICE_URI: "lb://user-service"
+  USER_SERVICE: "lb://user-service"
+
+serviceAccount:
+  create: true
+  name: gateway-service-account
+
+nodeSelector:
+  kubernetes.io/hostname: flex-prod-gateway
