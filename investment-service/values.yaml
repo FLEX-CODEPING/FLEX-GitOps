@@ -1,0 +1,59 @@
+namespace: investment-service
+# Replica count for the deployment
+replicaCount: 2
+# Image settings
+image:
+  repository: flexcodeping/flex-be-prod-investment
+  tag: "2" 
+  pullPolicy: IfNotPresent # Image pull policy
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+  
+# Pod annotations (optional)
+podAnnotations: {}
+# Pod labels (optional)
+podLabels: {}
+# Resource requests and limits
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+# Liveness probe configuration
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+# Readiness probe configuration
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+nodeSelector:
+  app: investment-service
+
+config:
+  APPLICATION_PORT: "8080"
+  SWAGGER_SERVER_URL: http://172.16.212.102:30000
+
+  DATABASE_HOST: "172.16.212.31"
+  DATABASE_USERNAME: "admin"
+  DATABASE_PASSWORD: "codeping1!"
+  DEV_KAFKA_BOOTSTRAP_SERVER: "172.16.212.31"
+  PROD_KAFKA_BOOTSTRAP_SERVER: "172.16.212.31"
+  KAFKA_BOOTSTRAP_PORT: "29092"
+  WEBCLIENT_BASE_URL: "http://172.16.212.102:30000"
+  OPEN_API_KEY: "OPEN_API_KEY"
+
+serviceAccount:
+  create: true
+  name: investment-service-account
+
+nodeSelector:
+  hostname: flex-prod-k8s-worker-2

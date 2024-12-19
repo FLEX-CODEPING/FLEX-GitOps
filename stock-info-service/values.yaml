@@ -1,0 +1,65 @@
+namespace: stock-service
+# Replica count for the deployment
+replicaCount: 2
+# Image settings
+image:
+  repository: flexcodeping/flex-be-prod-stock-info
+  tag: "1" # Default image tag
+  pullPolicy: IfNotPresent # Image pull policy
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+  
+# Pod annotations (optional)
+podAnnotations: {}
+# Pod labels (optional)
+podLabels: {}
+# Resource requests and limits
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+# Liveness probe configuration
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+# Readiness probe configuration
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+nodeSelector:
+  app: stock-service
+
+config:
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: "codeping1!"
+
+  SWAGGER_SERVER_URL: "http://172.16.212.102:30000"
+
+  DATABASE_HOST: "172.16.212.31"
+  DATABASE_USERNAME: "admin"
+  DATABASE_PASSWORD: "codeping1!"
+
+  APPLICATION_PORT: "8080"
+
+  ALGORITHM: "AES"
+  SECRET: "TEAM5CODEPING123"
+
+  ELASTICSEARCH_HOST: "172.16.212.31"
+
+
+serviceAccount:
+  create: true
+  name: stock-service-account
+
+nodeSelector:
+  hostname: flex-prod-k8s-worker-2
